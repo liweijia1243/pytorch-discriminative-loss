@@ -32,7 +32,7 @@ class SSSDataset(Dataset):
 
                 gt = np.zeros_like(img)
                 gt = cv2.fillPoly(gt, [box], 1)
-                ins[:, gt != 0] = 0
+                ins[:, gt != 0] = 0 #可以把不同instance叠起来
                 ins = np.concatenate([ins, gt[np.newaxis]])
                 img = cv2.fillPoly(img, [box], 255)
                 img = cv2.drawContours(img, [box], 0, 0, 2)

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
+from sklearn import cluster
+from sklearn.cluster import KMeans, MeanShift, DBSCAN
 
 
 def gen_mask(ins_img):
@@ -24,9 +25,13 @@ def coloring(mask):
 
 def gen_instance_mask(sem_pred, ins_pred, n_obj):
     embeddings = ins_pred[:, sem_pred].transpose(1, 0)
-    clustering = KMeans(n_obj).fit(embeddings)
+    #clustering = MeanShift(bandwidth=32,n_jobs=10).fit(embeddings)
+    #clustering = KMeans(n_obj).fit(embeddings)
+    clustering = DBSCAN(eps=0.7,min_samples=3,n_jobs=10).fit(embeddings)
+    # labels = KMeans(n_clusters=n_obj,
+    #                     n_init=35, max_iter=1000).fit_predict(embeddings)
     labels = clustering.labels_
-
+    print("total{0} class get from DBSCAN".format(len(np.unique(labels))))
     instance_mask = np.zeros_like(sem_pred, dtype=np.uint8)
     for i in range(n_obj):
         lbl = np.zeros_like(labels, dtype=np.uint8)

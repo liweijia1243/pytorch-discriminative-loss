@@ -4,7 +4,7 @@ https://arxiv.org/pdf/1802.05591.pdf
 This implementation is based on following code:
 https://github.com/Wizaron/instance-segmentation-pytorch
 """
-from torch.nn.modules.loss import _assert_no_grad, _Loss
+from torch.nn.modules.loss import  _Loss
 from torch.autograd import Variable
 import torch
 
@@ -25,7 +25,7 @@ class DiscriminativeLoss(_Loss):
         assert self.norm in [1, 2]
 
     def forward(self, input, target, n_clusters):
-        _assert_no_grad(target)
+        #_assert_no_grad(target)
         return self._discriminative_loss(input, target, n_clusters)
 
     def _discriminative_loss(self, input, target, n_clusters):
@@ -47,7 +47,6 @@ class DiscriminativeLoss(_Loss):
     def _cluster_means(self, input, target, n_clusters):
         bs, n_features, n_loc = input.size()
         max_n_clusters = target.size(1)
-
         # bs, n_features, max_n_clusters, n_loc
         input = input.unsqueeze(2).expand(bs, n_features, max_n_clusters, n_loc)
         # bs, 1, max_n_clusters, n_loc
