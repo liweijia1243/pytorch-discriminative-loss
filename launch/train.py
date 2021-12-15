@@ -39,7 +39,7 @@ def train(train_path:str):
     #Trian
     model_dir = Path('../model')
     best_loss = np.inf
-    for epoch in range(300):
+    for epoch in range(3000):
         print(f'epoch : {epoch}')
         disc_losses = []
         ce_losses = []
@@ -66,7 +66,7 @@ def train(train_path:str):
                                     .contiguous().view(-1, 2),
                                 sem_labels_ce.view(-1))
             loss += ce_loss
-            print(ce_loss.cpu().data.numpy())
+            #print(ce_loss.cpu().data.numpy())
             ce_losses.append(ce_loss.cpu().data.numpy())
 
             loss.backward()

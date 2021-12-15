@@ -115,3 +115,6 @@ tmp/
 
 # Dataset
 datasets/
+
+scripts/images/
+scripts/labels/

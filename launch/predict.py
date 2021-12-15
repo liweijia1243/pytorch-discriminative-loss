@@ -55,7 +55,7 @@ def predict(train_path:str):
         p_sem_pred = []
         for sp in pred_test:
             p_sem_pred.append(ndi.morphology.binary_fill_holes(sp > 0.5))
-        color_img = gen_color_img(p_sem_pred[0], ins_pred[0], 18)
+        color_img = gen_color_img(p_sem_pred[0], ins_pred[0], 3)
         plt.subplot(1,3,1)
         #plt.imshow(pred)
         plt.subplot(1,3,2)
